@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class zigzag_103 {
     public class TreeNode {
         int val;
-        Maxlevelsum_1161.TreeNode left;
-        Maxlevelsum_1161.TreeNode right;
+        TreeNode left;
+        TreeNode right;
         TreeNode() {}
         TreeNode(int val) { this.val = val; }
-        TreeNode(int val, Maxlevelsum_1161.TreeNode left, Maxlevelsum_1161.TreeNode right) {
+        TreeNode(int val, TreeNode left,TreeNode right) {
             this.val = val;
             this.left = left;
             this.right = right;
@@ -17,23 +18,23 @@ public class zigzag_103 {
     }
     List<List<Integer>> answer=new ArrayList<>();
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        LinkedList<Maxlevelsum_1161.TreeNode> queue = new LinkedList<>();
-
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        boolean turn=false;
         queue.add(root);
         while (!queue.isEmpty()){
-            int tempsum=0;
+
             int size=queue.size();
+            Integer [] temp=new Integer[size];
             for(int i=0;i<size;i++){
                 TreeNode tempnode=queue.removeFirst();
-                tempsum+=tempnode.val;
+                if(turn)temp[size-1-i]=tempnode.val;
+                else{temp[i]=tempnode.val;}
                 if(tempnode.left!=null){queue.add(tempnode.left);}
                 if(tempnode.right!=null){queue.add(tempnode.right);}
             }
-            if(maxsum<tempsum){
-                tempsum=maxsum;
-                level_max=level;
-            }
-            level++;
+            answer.add(Arrays.asList(temp));
+            turn=!turn;
         }
+        return answer;
     }
 }
